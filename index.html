@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our 1st Anniversary 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Montserrat:wght@400;600;700&family=Courier+Prime&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- KUNCI VIEWPORT (ANTI SCROLL & ANTI KEPOTONG) --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #ffebf0;
+            background-image: linear-gradient(#ffccd5 1.5px, transparent 1.5px), linear-gradient(90deg, #ffccd5 1.5px, transparent 1.5px);
+            background-size: 24px 24px; font-family: 'Montserrat', sans-serif; color: #4a1525;
+            width: 100vw; height: 100vh; overflow: hidden; 
+            display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+            padding: 10px 20px; position: relative;
+        }
+
+        /* --- 1. COVER SCREEN --- */
+        #cover-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #ffebf0;
+            background-image: linear-gradient(#ffccd5 1.5px, transparent 1.5px), linear-gradient(90deg, #ffccd5 1.5px, transparent 1.5px);
+            background-size: 24px 24px; z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer; transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #cover-screen.hidden { opacity: 0; visibility: hidden; }
+        .cover-text {
+            font-family: 'Courier Prime', monospace; font-size: 1.8rem; font-weight: bold;
+            color: #a63a50; margin-bottom: 35px; text-shadow: 2px 2px 0px #fff;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .cover-env-wrapper { transform: scale(1.3); pointer-events: none; }
+
+        /* --- BACKGROUND BUNGA --- */
+        .hearts-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; pointer-events: none; }
+        .heart-fall { position: absolute; font-size: 18px; animation: fall 7s linear infinite; bottom: -10px; }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- STAMPEL VINTAGE --- */
+        .vintage-stamp {
+            position: absolute; top: 15px; right: 30px; width: 65px; height: 85px; background: #ebdcd0;
+            border: 2px dashed #a89687; padding: 4px; box-shadow: 3px 3px 8px rgba(0,0,0,0.12); 
+            transform: rotate(6deg); display: flex; justify-content: center; align-items: center; z-index: 5;
+        }
+        .vintage-stamp-inner { width: 100%; height: 100%; border: 1px solid #c7b6a7; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+
+        /* --- HEADER AREA (COMPACT AGAR TIDAK NABRAK) --- */
+        header { text-align: center; z-index: 10; height: 95px; display: flex; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0; margin-top: 5px; }
+        .speech-bubble {
+            background: #fff; padding: 3px 14px; border-radius: 20px; font-family: 'Courier Prime', monospace; 
+            font-size: 0.75rem; font-weight: bold; display: inline-block; box-shadow: 2px 2px 0px #b83b5e; 
+            border: 2px solid #b83b5e; margin-bottom: 4px; transform: rotate(-1deg);
+        }
+        h1 { font-family: 'Caveat', cursive; font-size: 2.7rem; color: #b83b5e; text-shadow: 2px 2px 0px #fff; margin-bottom: 4px; line-height: 1; }
+        .countdown-container {
+            background: white; padding: 4px 18px; border-radius: 50px; border: 2px dashed #ff8da1; 
+            box-shadow: 0 4px 10px rgba(216, 45, 88, 0.08); display: inline-flex; gap: 6px; 
+            font-family: 'Courier Prime', monospace; font-weight: bold; font-size: 0.85rem;
+        }
+        .time-segment { color: #b83b5e; }
+
+        /* --- PAPAN UTAMA (Z-INDEX LEBIH TINGGI DARI HEADER) --- */
+        .main-board {
+            display: flex; justify-content: center; align-items: center;
+            width: 100%; max-width: 1200px; height: calc(100vh - 140px); max-height: 520px;
+            z-index: 50; /* KUNCI FIX: Di atas header supaya surat ga pernah ketutup */
+            padding: 0 10px; gap: 25px;
+        }
+
+        /* FOTO STRIP KIRI */
+        .photo-strip {
+            background: white; padding: 10px 10px 18px 10px; box-shadow: 5px 10px 20px rgba(0,0,0,0.14); 
+            transform: rotate(-3deg); width: 210px; border: 1px solid #e0e0e0; flex-shrink: 0;
+        }
+        .strip-item { width: 100%; height: 125px; background: #f7f7f7; margin-bottom: 8px; border: 1px solid #eee; overflow: hidden; }
+        .strip-item img { width: 100%; height: 100%; object-fit: cover; }
+        .strip-text { text-align: center; font-family: 'Caveat', cursive; font-size: 1.7rem; color: #ff4b6e; margin-top: 4px; }
+
+        /* AREA AMPLOP TENGAH */
+        .envelope-zone { flex-grow: 1; display: flex; justify-content: center; align-items: flex-end; height: 100%; padding-bottom: 15px; }
+        .envelope-wrapper { position: relative; width: 310px; height: 195px; cursor: pointer; transition: transform 0.3s ease; }
+        .envelope-wrapper:not(.cover-env-wrapper):hover { transform: scale(1.03); }
+
+        .env-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #a63a50; border-radius: 8px; z-index: 1; box-shadow: 0 8px 22px rgba(0,0,0,0.18); }
+        .env-flap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #822639; clip-path: polygon(0 0, 50% 60%, 100% 0); transform-origin: top; z-index: 4; transition: transform 0.5s ease-in-out, z-index 0s 0.2s; border-radius: 8px 8px 0 0; }
+        .env-front { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #be5269; clip-path: polygon(0 40%, 50% 65%, 100% 40%, 100% 100%, 0 100%); z-index: 3; border-radius: 0 0 8px 8px; }
+        .env-wax { position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%); width: 45px; height: 45px; background: radial-gradient(circle, #e63946 0%, #b5179e 100%); border-radius: 50%; z-index: 5; box-shadow: 0 3px 8px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; transition: opacity 0.3s; }
+        .env-wax::after { content: '❤'; color: #fff; font-size: 16px; }
+
+        /* KERTAS SURAT (TERSEMBUNYI TOTAL PAS TERTUTUP AGAR GA BOCOR) */
+        .env-letter {
+            position: absolute; bottom: 10px; left: 10px; right: 10px; background: #fffdf9; padding: 20px; border-radius: 6px;
+            border-left: 3px dashed rgba(217, 98, 121, 0.4); z-index: 2; height: 170px; overflow: hidden; 
+            opacity: 0; visibility: hidden; 
+            transition: transform 0.6s ease-in-out, height 0.6s ease-in-out, width 0.6s ease-in-out, left 0.6s ease-in-out, opacity 0.3s, visibility 0.3s; 
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.03);
+        }
+        .env-letter-content { height: 100%; overflow-y: auto; padding-right: 6px; }
+        .env-letter-content::-webkit-scrollbar { width: 5px; }
+        .env-letter-content::-webkit-scrollbar-thumb { background: #ffccd5; border-radius: 10px; }
+        .env-letter p { margin-bottom: 10px; font-family: 'Courier Prime', monospace; font-size: 0.88rem; line-height: 1.45; text-align: justify; color: #2b2b2b; }
+        .letter-signature { text-align: right; font-family: 'Caveat', cursive; font-size: 1.9rem; color: #b83b5e; margin-top: 10px; line-height: 1; }
+
+        /* AKSI BUKA SURAT (POSISI PAS DI BAWAH TIMER) */
+        .envelope-wrapper.is-open .env-flap { transform: rotateX(180deg); z-index: 1; }
+        .envelope-wrapper.is-open .env-wax { opacity: 0; pointer-events: none; }
+        .envelope-wrapper.is-open .env-letter {
+            opacity: 1; visibility: visible;
+            transform: translateY(-165px); /* Meluncur pas di bawah timer */
+            height: 335px; /* Kertas cukup tinggi dan ada scrollbar santai */
+            width: 410px;  /* Kertas melebar estetik keluar amplop */
+            left: -50px;   /* Center */
+            z-index: 99; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.22); 
+        }
+
+        /* FOTO GRID KANAN */
+        .maroon-panel { background: #5c0f1e; padding: 18px; border-radius: 10px; box-shadow: 6px 12px 25px rgba(0,0,0,0.18); width: 250px; transform: rotate(3deg); flex-shrink: 0; }
+        .pattern-paper { background: #fffdf9; padding: 10px; border-radius: 5px; }
+        .grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .grid-photo { width: 100%; aspect-ratio: 1 / 1; border: 3px solid white; box-shadow: 1px 2px 5px rgba(0,0,0,0.1); overflow: hidden; background: #e8e8e8; }
+        .grid-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* FOOTER */
+        footer { text-align: center; height: 25px; font-family: 'Courier Prime', monospace; font-size: 0.75rem; opacity: 0.6; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 10; }
+    </style>
+</head>
+<body>
+
+<div id="cover-screen" onclick="bukaCover()">
+    <div class="cover-text">Click this 💌</div>
+    <div class="envelope-wrapper cover-env-wrapper">
+        <div class="env-back"></div>
+        <div class="env-flap"></div>
+        <div class="env-wax"></div>
+        <div class="env-front"></div>
+    </div>
+</div>
+
+<div class="hearts-bg" id="hearts-box"></div>
+
+<div class="vintage-stamp"><div class="vintage-stamp-inner">🌸</div></div>
+
+<header>
+    <div class="speech-bubble">💌 LOVE YOU MORE EVERY DAY</div>
+    <h1>Happy 1st Anniversary! 💖</h1>
+    <div class="countdown-container">
+        <span>⏳ Kita bersama:</span>
+        <span class="time-segment" id="live-timer">00 Hari 00 Jam 00 Menit 00 Detik</span>
+    </div>
+</header>
+
+<div class="main-board">
+    
+    <div class="photo-strip">
+        <div class="strip-item"><img src="foto_strip1.jpeg" alt="Momen 1"></div>
+        <div class="strip-item"><img src="foto_strip2.jpeg" alt="Momen 2"></div>
+        <div class="strip-item"><img src="foto_strip3.jpeg" alt="Momen 3"></div>
+        <div class="strip-text">Love Always ✨</div>
+    </div>
+
+    <div class="envelope-zone">
+        <div class="envelope-wrapper" id="amplopku" onclick="bukaAmplop()">
+            <div class="env-back"></div>
+            <div class="env-flap"></div>
+            
+            <div class="env-letter">
+                <div class="env-letter-content">
+                    <p><strong>Hi Sayang,</strong></p>
+                    <p>Aku nggak tahu gimana caranya, tapi kamu selalu bisa bikin hari-hariku terasa lebih cerah hanya dengan kamu ada di sisiku. Kamu adalah ketenangan yang nggak pernah aku tahu kalau aku butuhin.</p>
+                    <p>Nggak kerasa kita udah ngelewatin 1 tahun penuh tawa, cerita, dan semua momen manis bareng-bareng. Terima kasih ya udah selalu sabar, selalu ada, dan jadi alasan utama aku tersenyum setiap hari.</p>
+                    <p>Aku bener-bener bahagia sama kamu, dan aku mau terus memilih kamu setiap harinya. Happy Anniversary sayangku! I love you so much.</p>
+                    <div class="letter-signature">
+                        Milikmu,<br>
+                        [Nama Kamu]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="env-wax"></div>
+            <div class="env-front"></div>
+        </div>
+    </div>
+
+    <div class="maroon-panel">
+        <div class="pattern-paper">
+            <div class="grid-2x2">
+                <div class="grid-photo"><img src="foto_grid1.jpeg" alt="1"></div>
+                <div class="grid-photo"><img src="foto_grid2.jpeg" alt="2"></div>
+                <div class="grid-photo"><img src="foto_grid3.jpeg" alt="3"></div>
+                <div class="grid-photo"><img src="foto_grid4.jpeg" alt="4"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>I love you today, tomorrow, and forever. ✨</footer>
+
+<audio id="bg-music" src="lagu_romantis.mp3" preload="auto" loop></audio>
+
+<script>
+    function bukaCover() {
+        document.getElementById('cover-screen').classList.add('hidden');
+        document.getElementById('bg-music').play().catch(e => console.log("Musik menunggu interaksi."));
+    }
+
+    function bukaAmplop() {
+        document.getElementById("amplopku").classList.toggle("is-open");
+    }
+
+    const tanggalJadian = new Date("2025-06-30T00:00:00").getTime();
+    setInterval(function() {
+        const sekarang = new Date().getTime();
+        const selisih = sekarang - tanggalJadian;
+        const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+        const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
+        const detik = Math.floor((selisih % (1000 * 60)) / 1000);
+        document.getElementById("live-timer").innerHTML = hari + " Hari " + jam + " Jam " + menit + " Menit " + detik + " Detik";
+    }, 1000);
+
+    const heartsBox = document.getElementById('hearts-box');
+    setInterval(function() {
+        const leaf = document.createElement('span');
+        leaf.classList.add('heart-fall');
+        const items = ['🌸', '💖', '✨', '💕', '🌷'];
+        leaf.innerText = items[Math.floor(Math.random() * items.length)];
+        leaf.style.left = Math.random() * 100 + 'vw';
+        leaf.style.animationDuration = Math.random() * 3 + 4 + 's';
+        leaf.style.fontSize = Math.random() * 8 + 14 + 'px';
+        heartsBox.appendChild(leaf);
+        setTimeout(() => { leaf.remove(); }, 7000);
+    }, 500);
+</script>
+
+</body>
+</html>
