@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our 1st Anniversary 💖</title>
+    <title>Our 1st Anniversary Scrapbook 💖</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Montserrat:wght@400;600;700&family=Courier+Prime&display=swap" rel="stylesheet">
     
     <style>
@@ -18,7 +18,83 @@
             padding: 10px 20px; position: relative;
         }
 
-        /* --- 1. COVER SCREEN --- */
+        /* --- SLIDE 1: ANIMASI BURUNG TERBANG MELINTASI LAYAR --- */
+        #bird-slide {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #d8f0ff 0%, #ebf8ff 100%);
+            z-index: 100000; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer; transition: opacity 0.8s ease, visibility 0.8s ease; overflow: hidden;
+        }
+
+        /* Jalur terbang melintasi layar dari kiri ke kanan */
+        .flight-path {
+            position: absolute;
+            top: 32%;
+            left: -220px;
+            animation: flyAcrossScreen 8s linear infinite;
+        }
+
+        /* Gerakan naik-turun halus saat terbang */
+        .bird-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: hoverBob 1.2s ease-in-out infinite alternate;
+        }
+
+        /* Ukuran & Shadow Burung */
+        .bird-svg {
+            width: 145px;
+            height: auto;
+            filter: drop-shadow(0 10px 18px rgba(2, 132, 199, 0.22));
+        }
+
+        /* Surat tergantung pas di bawah paruh merpati */
+        .mini-letter {
+            position: absolute;
+            bottom: -15px;
+            right: 28px;
+            font-size: 32px;
+            animation: letterWindSwing 1.5s ease-in-out infinite alternate;
+            transform-origin: top center;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+        }
+
+        /* Kotak Teks di Tengah Layar */
+        .intro-text-box {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin-top: 190px;
+        }
+
+        .intro-text {
+            font-family: 'Courier Prime', monospace; font-size: 1.2rem; font-weight: bold;
+            color: #0284c7; letter-spacing: 1px; animation: fadeText 2s infinite; 
+            background: rgba(255, 255, 255, 0.85); padding: 14px 28px; border-radius: 50px;
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.15); border: 2px solid #bae6fd;
+        }
+
+        @keyframes flyAcrossScreen {
+            0% { left: -180px; transform: translateY(30px) scale(0.9); }
+            50% { transform: translateY(-20px) scale(1.05); }
+            100% { left: calc(100vw + 180px); transform: translateY(10px) scale(0.95); }
+        }
+
+        @keyframes hoverBob {
+            0% { transform: translateY(-10px) rotate(-4deg); }
+            100% { transform: translateY(10px) rotate(4deg); }
+        }
+
+        @keyframes letterWindSwing {
+            0% { transform: rotate(-18deg); }
+            100% { transform: rotate(12deg); }
+        }
+
+        @keyframes fadeText { 0%, 100% { opacity: 0.65; } 50% { opacity: 1; } }
+
+        /* --- SLIDE 2: COVER SCREEN AMPLOP --- */
         #cover-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: #ffebf0;
@@ -27,16 +103,15 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             cursor: pointer; transition: opacity 0.8s ease, visibility 0.8s ease;
         }
-        #cover-screen.hidden { opacity: 0; visibility: hidden; }
+        #cover-screen.hidden, #bird-slide.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .cover-text {
             font-family: 'Courier Prime', monospace; font-size: 1.8rem; font-weight: bold;
-            color: #a63a50; margin-bottom: 35px; text-shadow: 2px 2px 0px #fff;
-            animation: bounce 2s infinite;
+            color: #a63a50; margin-bottom: 35px; text-shadow: 2px 2px 0px #fff; animation: bounce 2s infinite;
         }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         .cover-env-wrapper { transform: scale(1.3); pointer-events: none; }
 
-        /* --- BACKGROUND BUNGA --- */
+        /* --- BACKGROUND BUNGA BERGUGURAN --- */
         .hearts-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; pointer-events: none; }
         .heart-fall { position: absolute; font-size: 18px; animation: fall 7s linear infinite; bottom: -10px; }
         @keyframes fall {
@@ -52,7 +127,7 @@
         }
         .vintage-stamp-inner { width: 100%; height: 100%; border: 1px solid #c7b6a7; display: flex; align-items: center; justify-content: center; font-size: 28px; }
 
-        /* --- HEADER AREA (COMPACT AGAR TIDAK NABRAK) --- */
+        /* --- HEADER AREA --- */
         header { text-align: center; z-index: 10; height: 95px; display: flex; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0; margin-top: 5px; }
         .speech-bubble {
             background: #fff; padding: 3px 14px; border-radius: 20px; font-family: 'Courier Prime', monospace; 
@@ -67,20 +142,20 @@
         }
         .time-segment { color: #b83b5e; }
 
-        /* --- PAPAN UTAMA (Z-INDEX LEBIH TINGGI DARI HEADER) --- */
+        /* --- PAPAN UTAMA --- */
         .main-board {
             display: flex; justify-content: center; align-items: center;
             width: 100%; max-width: 1200px; height: calc(100vh - 140px); max-height: 520px;
-            z-index: 50; /* KUNCI FIX: Di atas header supaya surat ga pernah ketutup */
-            padding: 0 10px; gap: 25px;
+            z-index: 50; padding: 0 10px; gap: 25px;
         }
 
-        /* FOTO STRIP KIRI */
+        /* FOTO STRIP KIRI (DEKORASI PITA) */
         .photo-strip {
-            background: white; padding: 10px 10px 18px 10px; box-shadow: 5px 10px 20px rgba(0,0,0,0.14); 
-            transform: rotate(-3deg); width: 210px; border: 1px solid #e0e0e0; flex-shrink: 0;
+            background: white; padding: 15px 10px 18px 10px; box-shadow: 5px 10px 20px rgba(0,0,0,0.14); 
+            transform: rotate(-3deg); width: 210px; border: 1px solid #e0e0e0; flex-shrink: 0; position: relative;
         }
-        .strip-item { width: 100%; height: 125px; background: #f7f7f7; margin-bottom: 8px; border: 1px solid #eee; overflow: hidden; }
+        .ribbon-top-left { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 30px; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)); }
+        .strip-item { width: 100%; height: 120px; background: #f7f7f7; margin-bottom: 8px; border: 1px solid #eee; overflow: hidden; }
         .strip-item img { width: 100%; height: 100%; object-fit: cover; }
         .strip-text { text-align: center; font-family: 'Caveat', cursive; font-size: 1.7rem; color: #ff4b6e; margin-top: 4px; }
 
@@ -95,7 +170,7 @@
         .env-wax { position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%); width: 45px; height: 45px; background: radial-gradient(circle, #e63946 0%, #b5179e 100%); border-radius: 50%; z-index: 5; box-shadow: 0 3px 8px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; transition: opacity 0.3s; }
         .env-wax::after { content: '❤'; color: #fff; font-size: 16px; }
 
-        /* KERTAS SURAT (TERSEMBUNYI TOTAL PAS TERTUTUP AGAR GA BOCOR) */
+        /* KERTAS SURAT (TERSEMBUNYI SAAT AMPLOP TERTUTUP) */
         .env-letter {
             position: absolute; bottom: 10px; left: 10px; right: 10px; background: #fffdf9; padding: 20px; border-radius: 6px;
             border-left: 3px dashed rgba(217, 98, 121, 0.4); z-index: 2; height: 170px; overflow: hidden; 
@@ -114,16 +189,16 @@
         .envelope-wrapper.is-open .env-wax { opacity: 0; pointer-events: none; }
         .envelope-wrapper.is-open .env-letter {
             opacity: 1; visibility: visible;
-            transform: translateY(-165px); /* Meluncur pas di bawah timer */
-            height: 335px; /* Kertas cukup tinggi dan ada scrollbar santai */
-            width: 410px;  /* Kertas melebar estetik keluar amplop */
-            left: -50px;   /* Center */
-            z-index: 99; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.22); 
+            transform: translateY(-165px); height: 335px; width: 410px; left: -50px;
+            z-index: 99; box-shadow: 0 15px 35px rgba(0,0,0,0.22); 
         }
 
-        /* FOTO GRID KANAN */
-        .maroon-panel { background: #5c0f1e; padding: 18px; border-radius: 10px; box-shadow: 6px 12px 25px rgba(0,0,0,0.18); width: 250px; transform: rotate(3deg); flex-shrink: 0; }
+        /* FOTO GRID KANAN (DEKORASI PITA & HATI) */
+        .maroon-panel { background: #5c0f1e; padding: 18px; border-radius: 10px; box-shadow: 6px 12px 25px rgba(0,0,0,0.18); width: 250px; transform: rotate(3deg); flex-shrink: 0; position: relative; }
+        .ribbon-top-right { position: absolute; top: -16px; left: 50%; transform: translateX(-50%) rotate(5deg); font-size: 30px; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+        .heart-corner { position: absolute; font-size: 18px; color: #ff4b6e; z-index: 5; }
+        .hc-1 { top: 6px; left: 6px; }
+        .hc-2 { bottom: 6px; right: 6px; }
         .pattern-paper { background: #fffdf9; padding: 10px; border-radius: 5px; }
         .grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
         .grid-photo { width: 100%; aspect-ratio: 1 / 1; border: 3px solid white; box-shadow: 1px 2px 5px rgba(0,0,0,0.1); overflow: hidden; background: #e8e8e8; }
@@ -135,7 +210,29 @@
 </head>
 <body>
 
-<div id="cover-screen" onclick="bukaCover()">
+<div id="bird-slide" onclick="bukaSlideBurung()">
+    <div class="flight-path">
+        <div class="bird-container">
+            <svg class="bird-svg" viewBox="0 0 110 90" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(5, 8)">
+                    <path d="M48 38 C42 15, 24 5, 8 5 C20 22, 32 32, 42 42 Z" fill="#e0f2fe" stroke="#0284c7" stroke-width="3" stroke-linejoin="round"/>
+                    <path d="M28 55 C18 64, 6 72, 2 80 C14 78, 26 68, 36 60 Z" fill="#f0f9ff" stroke="#0284c7" stroke-width="3" stroke-linejoin="round"/>
+                    <path d="M28 50 C20 46, 12 50, 6 56 C14 58, 20 62, 25 68 C35 78, 56 75, 72 64 C86 55, 94 42, 97 30 C90 30, 76 33, 64 36 C50 38, 38 42, 28 50 Z" fill="#ffffff" stroke="#0284c7" stroke-width="3" stroke-linejoin="round"/>
+                    <path d="M55 42 C50 18, 32 8, 14 8 C26 26, 40 38, 52 48 Z" fill="#ffffff" stroke="#0284c7" stroke-width="3" stroke-linejoin="round"/>
+                    <circle cx="88" cy="33" r="2.2" fill="#0369a1"/>
+                    <path d="M97 30 L105 32 L96 36 Z" fill="#f59e0b" stroke="#d97706" stroke-width="2" stroke-linejoin="round"/>
+                </g>
+            </svg>
+            <div class="mini-letter">💌</div>
+        </div>
+    </div>
+    
+    <div class="intro-text-box">
+        <div class="intro-text">catch me babyyyy❤️✨<br><span style="font-size:0.85rem; font-weight:normal; color:#0369a1;">(Click anywhere on screen to catch me!)</span></div>
+    </div>
+</div>
+
+<div id="cover-screen" onclick="bukaCoverAmplop()">
     <div class="cover-text">Click this 💌</div>
     <div class="envelope-wrapper cover-env-wrapper">
         <div class="env-back"></div>
@@ -146,25 +243,25 @@
 </div>
 
 <div class="hearts-bg" id="hearts-box"></div>
-
 <div class="vintage-stamp"><div class="vintage-stamp-inner">🌸</div></div>
 
 <header>
-    <div class="speech-bubble">💌 LOVE YOU MORE EVERY DAY</div>
-    <h1>Happy 1st Anniversary! 💖</h1>
+    <div class="speech-bubble">💌 FOREVER & ALWAYS WITH YOU</div>
+    <h1>Happy 1st Anniversary bayikk! 💖</h1>
     <div class="countdown-container">
-        <span>⏳ Kita bersama:</span>
-        <span class="time-segment" id="live-timer">00 Hari 00 Jam 00 Menit 00 Detik</span>
+        <span>⏳ Our love story in numbers:</span>
+        <span class="time-segment" id="live-timer">0 Days 0 Hours 0 Minutes 0 Seconds</span>
     </div>
 </header>
 
 <div class="main-board">
     
     <div class="photo-strip">
-        <div class="strip-item"><img src="foto_strip1.jpeg" alt="Momen 1"></div>
-        <div class="strip-item"><img src="foto_strip2.jpeg" alt="Momen 2"></div>
-        <div class="strip-item"><img src="foto_strip3.jpeg" alt="Momen 3"></div>
-        <div class="strip-text">Love Always ✨</div>
+        <div class="ribbon-top-left">🎀</div>
+        <div class="strip-item"><img src="foto_strip1.jpeg" alt="Moment 1"></div>
+        <div class="strip-item"><img src="foto_strip2.jpeg" alt="Moment 2"></div>
+        <div class="strip-item"><img src="foto_strip3.jpeg" alt="Moment 3"></div>
+        <div class="strip-text">Love Always ❤️</div>
     </div>
 
     <div class="envelope-zone">
@@ -174,13 +271,13 @@
             
             <div class="env-letter">
                 <div class="env-letter-content">
-                    <p><strong>Hi Sayang,</strong></p>
-                    <p>Aku nggak tahu gimana caranya, tapi kamu selalu bisa bikin hari-hariku terasa lebih cerah hanya dengan kamu ada di sisiku. Kamu adalah ketenangan yang nggak pernah aku tahu kalau aku butuhin.</p>
-                    <p>Nggak kerasa kita udah ngelewatin 1 tahun penuh tawa, cerita, dan semua momen manis bareng-bareng. Terima kasih ya udah selalu sabar, selalu ada, dan jadi alasan utama aku tersenyum setiap hari.</p>
-                    <p>Aku bener-bener bahagia sama kamu, dan aku mau terus memilih kamu setiap harinya. Happy Anniversary sayangku! I love you so much.</p>
+                    <p><strong>My yittle one,</strong></p>
+                    <p>I honestly don't know how you do it, but you always manage to brighten my days simply by being by my side. You are the peace and comfort I never knew I needed.</p>
+                    <p>Time flew by so fast, and suddenly we've shared a whole year filled with laughter, memories, and countless sweet moments together. Thank you for always being patient, for always staying close, and for being the biggest reason behind my smile every single day.</p>
+                    <p>I am genuinely blessed to have you, and I will choose you over and over again every day. Happy 1st Anniversary, my love! I love you endlessly.</p>
                     <div class="letter-signature">
-                        Milikmu,<br>
-                        [Nama Kamu]
+                        Forever yours,<br>
+                        (mashhmuuu)
                     </div>
                 </div>
             </div>
@@ -191,6 +288,9 @@
     </div>
 
     <div class="maroon-panel">
+        <div class="ribbon-top-right">🎀</div>
+        <div class="heart-corner hc-1">❤️</div>
+        <div class="heart-corner hc-2">❤️</div>
         <div class="pattern-paper">
             <div class="grid-2x2">
                 <div class="grid-photo"><img src="foto_grid1.jpeg" alt="1"></div>
@@ -208,26 +308,38 @@
 <audio id="bg-music" src="lagu_romantis.mp3" preload="auto" loop></audio>
 
 <script>
-    function bukaCover() {
-        document.getElementById('cover-screen').classList.add('hidden');
-        document.getElementById('bg-music').play().catch(e => console.log("Musik menunggu interaksi."));
+    // Transisi Slide 1 ke Slide 2
+    function bukaSlideBurung() {
+        document.getElementById('bird-slide').classList.add('hidden');
     }
 
+    // Transisi Slide 2 ke Scrapbook Utama & Putar Musik
+    function bukaCoverAmplop() {
+        document.getElementById('cover-screen').classList.add('hidden');
+        document.getElementById('bg-music').play().catch(e => console.log("Musik menunggu interaksi browser."));
+    }
+
+    // Buka/Tutup Amplop Surat
     function bukaAmplop() {
         document.getElementById("amplopku").classList.toggle("is-open");
     }
 
+    // Hitung Mundur Jadian (Ganti dengan tanggal asli kalian: YYYY-MM-DDTHH:MM:SS)
     const tanggalJadian = new Date("2025-06-30T00:00:00").getTime();
-    setInterval(function() {
+    
+    function updateTimer() {
         const sekarang = new Date().getTime();
         const selisih = sekarang - tanggalJadian;
         const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
         const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
         const detik = Math.floor((selisih % (1000 * 60)) / 1000);
-        document.getElementById("live-timer").innerHTML = hari + " Hari " + jam + " Jam " + menit + " Menit " + detik + " Detik";
-    }, 1000);
+        document.getElementById("live-timer").innerHTML = `${hari} Days ${jam} Hours ${menit} Minutes ${detik} Seconds`;
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
 
+    // Efek Hati dan Bunga Berguguran
     const heartsBox = document.getElementById('hearts-box');
     setInterval(function() {
         const leaf = document.createElement('span');
